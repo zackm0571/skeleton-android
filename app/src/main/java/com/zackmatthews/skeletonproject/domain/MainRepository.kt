@@ -1,5 +1,6 @@
-package com.zackmatthews.skeletonproject
+package com.zackmatthews.skeletonproject.domain
 
+import com.zackmatthews.skeletonproject.data.MainService
 import kotlinx.coroutines.flow.flow
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

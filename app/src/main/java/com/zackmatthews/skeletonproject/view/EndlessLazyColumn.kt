@@ -1,4 +1,4 @@
-package com.zackmatthews.skeletonproject
+package com.zackmatthews.skeletonproject.view
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope

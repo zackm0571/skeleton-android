@@ -1,4 +1,4 @@
-package com.zackmatthews.skeletonproject
+package com.zackmatthews.skeletonproject.domain
 
 /**
  * This class is a model of image and breed data returned by TheCatAPI

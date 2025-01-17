@@ -1,5 +1,6 @@
-package com.zackmatthews.skeletonproject
+package com.zackmatthews.skeletonproject.data
 
+import com.zackmatthews.skeletonproject.domain.CatModel
 import retrofit2.http.GET
 import retrofit2.http.Query
 
