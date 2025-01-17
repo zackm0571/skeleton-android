@@ -11,17 +11,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,9 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.zackmatthews.skeletonproject.ui.theme.CARD_HEIGHT
 import com.zackmatthews.skeletonproject.ui.theme.CARD_WIDTH
-import com.zackmatthews.skeletonproject.ui.theme.DrkGrey
 import com.zackmatthews.skeletonproject.ui.theme.FEED_SPACER
 import com.zackmatthews.skeletonproject.ui.theme.SkeletonProjectTheme
 
@@ -57,19 +57,28 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
     fun MainContent(innerPadding: PaddingValues) {
-        val data = viewModel.data.collectAsStateWithLifecycle().value
         Box(modifier = Modifier.fillMaxSize()) {
-            LazyColumn(
+            Timeline(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                    .fillMaxSize()
+                    .align(Alignment.Center),
+            )
+        }
+    }
+
+    @Composable
+    fun Timeline(modifier: Modifier = Modifier) {
+        val data = viewModel.data.collectAsStateWithLifecycle().value
+        EndlessLazyColumn(modifier = modifier,
+            content = {
                 items(data.size) { index ->
                     FeedEntry(data[index])
                 }
+            }, onLoadMore = {
+                viewModel.fetchCats()
             }
-        }
+        )
     }
 
     @OptIn(ExperimentalGlideComposeApi::class)
@@ -84,7 +93,7 @@ class MainActivity : ComponentActivity() {
                     .wrapContentHeight()
                     .width(CARD_WIDTH)
             ) {
-                Column(modifier = Modifier.padding(20.dp)){
+                Column(modifier = Modifier.padding(20.dp)) {
                     Text(
                         text = "ID: ${data.id}",
                         maxLines = 1,

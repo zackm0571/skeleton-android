@@ -17,7 +17,7 @@ class MainViewModel : ViewModel() {
         fetchCats()
     }
 
-    private fun fetchCats() {
+    fun fetchCats() {
         viewModelScope.launch {
             repository.getCats(10).collect { response ->
                 _data.update { existing ->
