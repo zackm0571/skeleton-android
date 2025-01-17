@@ -59,6 +59,10 @@ fun FeedEntry(data: CatModel) {
                     model = data.url,
                     contentDescription = "Cat", contentScale = ContentScale.Inside
                 )
+
+                Spacer(modifier = Modifier.size(10.dp))
+
+                DescriptionText()
             }
         }
     }
